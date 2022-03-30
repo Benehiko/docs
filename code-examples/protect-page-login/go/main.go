@@ -16,16 +16,9 @@ type App struct {
 }
 
 func main() {
-  proxyPort := os.Getenv("PROXY_PORT")
-  if proxyPort == "" {
-    proxyPort = "4000"
-  }
-
-  // register a new Ory client with the URL set to the Ory CLI Proxy
-  // we can also read the URL from the env or a config file
+  // we need to point to our custom domain now
   c := ory.NewConfiguration()
-  c.Servers = ory.ServerConfigurations{{URL: fmt.Sprintf("http://localhost:%s/.ory", proxyPort)}}
-
+  c.Servers = ory.ServerConfigurations{{URL: "https://auth.example.com"}}
   app := &App{
     ory: ory.NewAPIClient(c),
   }

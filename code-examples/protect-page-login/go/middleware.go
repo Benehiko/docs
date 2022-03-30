@@ -18,8 +18,8 @@ func (app *App) sessionMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		// check if we have a session
 		session, _, err := app.ory.V0alpha2Api.ToSession(request.Context()).Cookie(cookies).Execute()
 		if (err != nil && session == nil) || (err == nil && !*session.Active) {
-			// this will redirect the user to the managed Ory Login UI
-			http.Redirect(writer, request, "/.ory/api/kratos/public/self-service/login/browser", http.StatusSeeOther)
+			// this will redirect the user to the managed Ory Login UI through your custom domain
+			http.Redirect(writer, request, "https://auth.example.com/api/kratos/public/self-service/login/browser", http.StatusSeeOther)
 			return
 		}
 		app.cookies = cookies
